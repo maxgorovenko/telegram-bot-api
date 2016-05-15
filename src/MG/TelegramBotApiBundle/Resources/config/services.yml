@@ -2,5 +2,5 @@ services:
     mg.telegram_bot_api:
         class: MG\TelegramBotApiBundle\Service\Api
         arguments:
-            - "%mg.telegram_bot_api_token%"
+            - "%mg_telegram_bot_api.token%"
             - "@jms_serializer"
