@@ -21,7 +21,7 @@ class Api
     /** @var string */
     private $token;
 
-    /** @var  */
+    /** @var resource */
     private $curl;
 
     /** @var Serializer */
@@ -49,9 +49,9 @@ class Api
     }
 
     /**
-     * @return $this
+     * @return resource
      */
-    private function prepareCurl()
+    private function getCurl()
     {
         if (null === $this->curl) {
             $this->curl = curl_init();
@@ -62,6 +62,8 @@ class Api
                 CURLOPT_TIMEOUT => 10,
             ]);
         }
+
+        return $this->curl;
     }
 
     /**
@@ -75,20 +77,18 @@ class Api
      */
     private function post($method, $params, $returnType = null, $allowEmpty = false)
     {
-        $this->prepareCurl();
-
         foreach ($params as $name => $param) {
             if (null === $param) {
                 unset($params[$name]);
             }
         }
 
-        curl_setopt_array($this->curl, [
+        curl_setopt_array($this->getCurl(), [
             CURLOPT_URL => "https://api.telegram.org/bot{$this->token}/{$method}",
             CURLOPT_POSTFIELDS => $params
         ]);
 
-        return $this->parseResponse(curl_exec($this->curl), $returnType, $allowEmpty);
+        return $this->parseResponse(curl_exec($this->getCurl()), $returnType, $allowEmpty);
     }
 
     /**
