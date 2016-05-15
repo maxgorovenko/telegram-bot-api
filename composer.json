@@ -1,0 +1,16 @@
+{
+    "name": "maxgorovenko/telegram-bot-api",
+    "description": "A wrapper for Telegram Bot API",
+    "keywords": ["telegram", "bot", "api", "telegram-bot-api", "php", "symfony2", "symfony", "telegram-bot", "telegram-api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Max Gorovenko",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^5.3.3 || ^7.0",
+        "jms/serializer-bundle": "^1.1"
+    }
+}
