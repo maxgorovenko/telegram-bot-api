@@ -32,7 +32,7 @@ class AppKernel extends Kernel
 ```yaml
 # app/config/config.yml
 
-shaygan_telegram_bot_api:
+mg_telegram_bot_api:
     token: xxxxx:yyyyyyyyyyyyyyyyyyyy
 ```
 
