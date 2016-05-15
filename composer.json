@@ -12,5 +12,8 @@
     "require": {
         "php": "^5.3.3 || ^7.0",
         "jms/serializer-bundle": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {"MG\\TelegramBotApiBundle\\": "src/MG/TelegramBotApiBundle"}
     }
 }
