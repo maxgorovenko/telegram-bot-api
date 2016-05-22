@@ -108,7 +108,7 @@ class Api
         $data = json_decode($response, true);
 
         if (null === $data) {
-            throw new \Exception("Cannot json_decode response: '{$response}'");
+            throw new UnsuccessfulRequestException("Cannot json_decode response: '{$response}'");
         }
 
         if (!isset($data['ok']) || true !== $data['ok']) {
@@ -120,7 +120,7 @@ class Api
         }
 
         if (!isset($data['result'])) {
-            throw new \Exception("Missing result field in response: '{$response}'");
+            throw new UnsuccessfulRequestException("Missing result field in response: '{$response}'");
         }
 
         return $this->serializer->deserialize(json_encode($data['result']), $returnType, 'json');
