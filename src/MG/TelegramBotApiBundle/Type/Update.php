@@ -44,6 +44,13 @@ class Update
      */
     private $callback_query;
 
+    /**
+     * @var Message
+     *
+     * @JMS\Type("MG\TelegramBotApiBundle\Type\Message")
+     */
+    private $edited_message;
+
 
     /**
      * @return int
@@ -123,5 +130,21 @@ class Update
     public function setCallbackQuery($callback_query)
     {
         $this->callback_query = $callback_query;
+    }
+
+    /**
+     * @return Message
+     */
+    public function getEditedMessage()
+    {
+        return $this->edited_message;
+    }
+
+    /**
+     * @param Message $edited_message
+     */
+    public function setEditedMessage($edited_message)
+    {
+        $this->edited_message = $edited_message;
     }
 }

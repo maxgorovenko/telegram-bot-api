@@ -4,6 +4,8 @@ namespace MG\TelegramBotApiBundle\Service;
 
 use JMS\Serializer\Serializer;
 use MG\TelegramBotApiBundle\Exception\UnsuccessfulRequestException;
+use MG\TelegramBotApiBundle\Type\Chat;
+use MG\TelegramBotApiBundle\Type\ChatMember;
 use MG\TelegramBotApiBundle\Type\File;
 use MG\TelegramBotApiBundle\Type\ForceReply;
 use MG\TelegramBotApiBundle\Type\InlineKeyboardMarkup;
@@ -652,6 +654,169 @@ class Api
                 'switch_pm_parameter' => $switch_pm_parameter,
             ],
             'boolean'
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Required if inline_message_id is not specified. Unique identifier for the target chat
+     * or username of the target channel (in the format @channelusername)
+     * @param int $message_id Required if inline_message_id is not specified. Unique identifier of the sent message
+     * @param string $inline_message_id Required if chat_id and message_id are not specified.
+     * Identifier of the inline message
+     * @param string $text New text of the message
+     * @param string $parse_mode Send Markdown or HTML, if you want Telegram apps to show bold, italic,
+     * fixed-width text or inline URLs in your bot's message.
+     * @param bool $disable_web_page_preview Disables link previews for links in this message
+     * @param InlineKeyboardMarkup $reply_markup A JSON-serialized object for an inline keyboard.
+     * @return Message|bool
+     */
+    public function editMessageText($chat_id = null, $message_id = null, $inline_message_id = null, $text,
+        $parse_mode = null, $disable_web_page_preview = null, $reply_markup = null)
+    {
+        return $this->post(
+            'editMessageText',
+            [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id,
+                'inline_message_id' => $inline_message_id,
+                'text' => $text,
+                'parse_mode' => $parse_mode,
+                'disable_web_page_preview' => $disable_web_page_preview,
+                'reply_markup' => $reply_markup ? $this->serializer->serialize($reply_markup, 'json') : null,
+            ],
+            Message::class
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Required if inline_message_id is not specified. Unique identifier for the target chat
+     * or username of the target channel (in the format @channelusername)
+     * @param int $message_id Required if inline_message_id is not specified. Unique identifier of the sent message
+     * @param string $inline_message_id Required if chat_id and message_id are not specified.
+     * Identifier of the inline message
+     * @param string $caption New caption of the message
+     * @param InlineKeyboardMarkup $reply_markup A JSON-serialized object for an inline keyboard.
+     * @return Message|bool
+     */
+    public function editMessageCaption($chat_id = null, $message_id = null, $inline_message_id = null, $caption = null,
+        $reply_markup = null)
+    {
+        return $this->post(
+            'editMessageCaption',
+            [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id,
+                'inline_message_id' => $inline_message_id,
+                'caption' => $caption,
+                'reply_markup' => $reply_markup ? $this->serializer->serialize($reply_markup, 'json') : null,
+            ],
+            Message::class
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Required if inline_message_id is not specified. Unique identifier for the target chat
+     * or username of the target channel (in the format @channelusername)
+     * @param int $message_id Required if inline_message_id is not specified. Unique identifier of the sent message
+     * @param string $inline_message_id Required if chat_id and message_id are not specified.
+     * Identifier of the inline message
+     * @param InlineKeyboardMarkup $reply_markup A JSON-serialized object for an inline keyboard.
+     * @return Message|bool
+     */
+    public function editMessageReplyMarkup($chat_id = null, $message_id = null, $inline_message_id = null,
+        $reply_markup = null)
+    {
+        return $this->post(
+            'editMessageReplyMarkup',
+            [
+                'chat_id' => $chat_id,
+                'message_id' => $message_id,
+                'inline_message_id' => $inline_message_id,
+                'reply_markup' => $reply_markup ? $this->serializer->serialize($reply_markup, 'json') : null,
+            ],
+            Message::class
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     * or channel (in the format @channelusername)
+     * @return Chat
+     */
+    public function getChat($chat_id)
+    {
+        return $this->post(
+            'getChat',
+            [
+                'chat_id' => $chat_id,
+            ],
+            Chat::class
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     * or channel (in the format @channelusername)
+     * @return bool
+     */
+    public function leaveChat($chat_id)
+    {
+        return $this->post(
+            'leaveChat',
+            [
+                'chat_id' => $chat_id,
+            ],
+            'boolean'
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     * or channel (in the format @channelusername)
+     * @return ChatMember[]
+     */
+    public function getChatAdministrators($chat_id)
+    {
+        return $this->post(
+            'getChatAdministrators',
+            [
+                'chat_id' => $chat_id,
+            ],
+            'array<'.ChatMember::class.'>'
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     * or channel (in the format @channelusername)
+     * @param int $user_id Unique identifier of the target user
+     * @return ChatMember
+     */
+    public function getChatMember($chat_id, $user_id)
+    {
+        return $this->post(
+            'getChatMember',
+            [
+                'chat_id' => $chat_id,
+                'user_id' => $user_id,
+            ],
+            ChatMember::class
+        );
+    }
+
+    /**
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     * or channel (in the format @channelusername)
+     * @return int
+     */
+    public function getChatMembersCount($chat_id)
+    {
+        return $this->post(
+            'getChatMembersCount',
+            [
+                'chat_id' => $chat_id,
+            ],
+            'integer'
         );
     }
 }

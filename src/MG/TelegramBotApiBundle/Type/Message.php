@@ -66,6 +66,13 @@ class Message
     private $reply_to_message;
 
     /**
+     * @var int
+     *
+     * @JMS\Type("integer")
+     */
+    private $edit_date;
+
+    /**
      * @var string
      *
      * @JMS\Type("string")
@@ -721,5 +728,21 @@ class Message
     public function setPinnedMessage($pinned_message)
     {
         $this->pinned_message = $pinned_message;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditDate()
+    {
+        return $this->edit_date;
+    }
+
+    /**
+     * @param mixed $edit_date
+     */
+    public function setEditDate($edit_date)
+    {
+        $this->edit_date = $edit_date;
     }
 }

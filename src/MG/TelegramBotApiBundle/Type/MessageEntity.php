@@ -37,6 +37,13 @@ class MessageEntity
      */
     private $url;
 
+    /**
+     * @var User
+     *
+     * @JMS\Type("MG\TelegramBotApiBundle\Type\User")
+     */
+    private $user;
+
 
     /**
      * @return string
